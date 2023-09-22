@@ -1,39 +1,39 @@
-import { LitElement, css, html } from "lit";
-import Module from "../duck/build/src/duck.js";
-import "./prism.js";
-import "lit-code";
+import { LitElement, css, html } from 'lit'
+import Module from '../duck/build/src/duck.js'
+import './prism.js'
+import 'lit-code'
 
 export class DuckCodeEditor extends LitElement {
   constructor() {
-    super();
+    super()
     Module().then((m) => {
-      this.duck = m;
-      this.updateText();
-    });
+      this.duck = m
+      this.updateText()
+    })
   }
 
   generate_interface(name) {
-    const output = this.duck._malloc(65536);
+    const output = this.duck._malloc(65536)
     const isValid = this.duck.ccall(
-      "parse_interface",
-      "number",
-      ["string", "number"],
-      [name, output],
-    );
-    var outputString = this.duck.UTF8ToString(output);
-    this.duck._free(output);
-    return outputString;
+      'parse_interface',
+      'number',
+      ['string', 'number'],
+      [name, output]
+    )
+    var outputString = this.duck.UTF8ToString(output)
+    this.duck._free(output)
+    return outputString
   }
 
   updateText() {
     if (this.duck) {
       this.shadowRoot
-        .querySelector(".right")
+        .querySelector('.right')
         .setCode(
           this.generate_interface(
-            this.shadowRoot.querySelector(".left").getCode(),
-          ),
-        );
+            this.shadowRoot.querySelector('.left').getCode()
+          )
+        )
     }
   }
 
@@ -49,12 +49,9 @@ export class DuckCodeEditor extends LitElement {
           language="cpp"
           @update=${this.updateText}
         ></lit-code>
-        <lit-code
-          class="right"
-          language="cpp"
-        ></lit-code>
+        <lit-code class="right" language="cpp"></lit-code>
       </div>
-    `;
+    `
   }
 
   static get styles() {
@@ -88,8 +85,8 @@ export class DuckCodeEditor extends LitElement {
           height: 600px;
         }
       }
-    `;
+    `
   }
 }
 
-window.customElements.define("duck-code-editor", DuckCodeEditor);
+window.customElements.define('duck-code-editor', DuckCodeEditor)
