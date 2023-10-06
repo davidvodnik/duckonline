@@ -1,0 +1,3 @@
+[submodule "duck"]
+	path = duck
+	url = git@github.com:davidvodnik/duck.git
